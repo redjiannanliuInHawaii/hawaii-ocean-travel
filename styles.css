@@ -106,6 +106,9 @@ footer { padding:52px max(20px, calc((100% - 1200px)/2)); background:#f6f7f4; di
 .footer-brand { color:var(--ink); }
 footer p { margin:0; }
 footer p:last-child { text-align:right; }
+/* Reduce spacing between About and Gallery */
+.about.section { padding-bottom: 45px; }
+.gallery.section { padding-top: 45px; }
 @media (max-width: 900px) {
   .site-header { height:68px; }
   .menu-button { display:block; }
