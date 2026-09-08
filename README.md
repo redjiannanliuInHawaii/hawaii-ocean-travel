@@ -33,3 +33,4 @@ This is a static site. You can connect the GitHub repository to Cloudflare and u
 - `styles.css` — design and responsive styles
 - `script.js` — mobile menu and header behavior
 - `assets/images/` — optimized WebP photos
+Deployment trigger
