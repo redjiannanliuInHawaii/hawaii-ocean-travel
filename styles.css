@@ -92,9 +92,9 @@ h3 { font-size: clamp(2rem, 3vw, 3rem); font-weight: 600; }
 .credential-grid strong,.credential-grid span { display:block; }
 .credential-grid strong { font-size:1.1rem; }
 .credential-grid span { font-size:.8rem; color:#6b7b82; margin-top:.15rem; }
-.gallery { gap: 14px }
-.gallery img { height: 430px; }
-.gallery img:nth-child(2), .gallery img:nth-child(4) { margin-top:48px; }
+.gallery { display:grid; grid-template-columns:1fr .8fr 1.1fr .8fr; gap:12px; }
+.gallery img { height:470px; object-fit:cover; border-radius:18px; }
+.gallery img:nth-child(2), .gallery img:nth-child(4) { margin-top:70px; }
 .book { width:100%; max-width:none; background:var(--deep); color:#fff; padding-left:max(20px, calc((100% - 1200px)/2)); padding-right:max(20px, calc((100% - 1200px)/2)); display:grid; grid-template-columns:1.3fr .7fr; gap:8vw; align-items:end; }
 .book h2 { max-width:790px; }
 .book p:not(.eyebrow) { color:rgba(255,255,255,.72); max-width:760px; }
