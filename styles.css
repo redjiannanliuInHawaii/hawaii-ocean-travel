@@ -106,9 +106,6 @@ footer { padding:52px max(20px, calc((100% - 1200px)/2)); background:#f6f7f4; di
 .footer-brand { color:var(--ink); }
 footer p { margin:0; }
 footer p:last-child { text-align:right; }
-/* Reduce spacing between About and Gallery */
-.about.section { padding-bottom: 45px; }
-.gallery.section { padding-top: 45px; }
 @media (max-width: 900px) {
   .site-header { height:68px; }
   .menu-button { display:block; }
@@ -157,4 +154,35 @@ footer p:last-child { text-align:right; }
   .gallery { grid-template-columns:1fr; }
   .gallery img { height:440px; }
   .book { padding-top:80px; padding-bottom:80px; }
+}
+
+/* Booking inquiry form */
+.book { align-items:start; }
+.book-copy { position:sticky; top:120px; }
+.book-contact { display:flex; flex-direction:column; align-items:flex-start; gap:.65rem; margin-top:2rem; }
+.booking-form { background:#fff; color:var(--ink); border-radius:var(--radius); padding:clamp(24px,3vw,38px); box-shadow:0 24px 70px rgba(0,0,0,.18); }
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.form-field { display:flex; flex-direction:column; gap:.45rem; }
+.form-field-wide { grid-column:1 / -1; }
+.form-field > span { font-size:.79rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#49626d; }
+.form-field > span small { font-size:.72rem; font-weight:650; letter-spacing:0; text-transform:none; color:#7a8b92; }
+.form-field input,
+.form-field select,
+.form-field textarea { width:100%; border:1px solid rgba(9,38,51,.18); border-radius:12px; background:#f9fbfb; color:var(--ink); font:inherit; padding:.9rem 1rem; outline:none; transition:border-color .2s, box-shadow .2s, background .2s; }
+.form-field input,
+.form-field select { min-height:52px; }
+.form-field textarea { resize:vertical; min-height:110px; }
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus { border-color:#2f748d; box-shadow:0 0 0 4px rgba(47,116,141,.12); background:#fff; }
+.booking-submit { margin-top:1.25rem; border:0; cursor:pointer; background:var(--deep); color:#fff; }
+.form-note { margin:.85rem 0 0 !important; color:#708087 !important; font-size:.78rem; line-height:1.45; }
+@media (max-width:900px) {
+  .book-copy { position:static; }
+}
+@media (max-width:600px) {
+  .form-grid { grid-template-columns:1fr; }
+  .form-field-wide { grid-column:auto; }
+  .booking-form { padding:22px 18px; }
+  .booking-submit { width:100%; }
 }
