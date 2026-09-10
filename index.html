@@ -12,7 +12,7 @@
   <meta property="og:url" content="https://hawaiioceantravel.com/" />
   <meta property="og:image" content="https://hawaiioceantravel.com/assets/images/hero-waikiki.webp" />
   <link rel="canonical" href="https://hawaiioceantravel.com/" />
-  <link rel="stylesheet" href="styles.css?v=20260909-3" />
+  <link rel="stylesheet" href="styles.css?v=20260909-4" />
 </head>
 <body>
   <header class="site-header" id="top">
@@ -176,7 +176,10 @@
           <h3>Send a booking request</h3>
           <p>Tell us your preferred experience and date. We'll confirm availability and next steps.</p>
         </div>
-        
+        <input type="hidden" name="_subject" value="New Hawaii Ocean Travel Booking Request" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="text" name="_honey" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
         <div class="form-grid">
           <label class="form-field form-field-wide">
             <span>Experience</span>
@@ -234,7 +237,8 @@
         </div>
 
         <button class="button light booking-submit" type="submit">Send Booking Request</button>
-        <p class="form-note">Submitting opens your email app with your request pre-filled. No payment is collected on this form.</p>
+        <p class="form-status" id="booking-status" role="status" aria-live="polite"></p>
+        <p class="form-note">Your request is sent securely to Hawaii Ocean Travel. No payment is collected on this form.</p>
       </form>
     </section>
 
@@ -249,6 +253,6 @@
     <p>© <span id="year"></span> Hawaii Ocean Travel. All rights reserved.</p>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=20260909-4"></script>
 </body>
 </html>
