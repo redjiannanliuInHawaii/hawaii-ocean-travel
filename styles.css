@@ -464,4 +464,13 @@ footer p:last-child { text-align:right; }
 .form-status.error {
   color:#a13b32;
 }
+@media (max-width: 600px) {
+  .intro {
+    padding-bottom: 20px;
+  }
+
+  .service-grid {
+    margin-top: -30px;
+  }
+}
 
