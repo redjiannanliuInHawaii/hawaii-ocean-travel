@@ -138,7 +138,10 @@ footer p:last-child { text-align:right; }
   .scroll-cue { display:none; }
   .section { width:min(100% - 30px,1200px); padding:80px 0; }
   .intro { gap:1.5rem; }
-  .service-card, .service-card.large { min-height:560px; }
+  .service-card, .service-card.large { min-height:500px; }
+  .service-content { bottom: 28px; }
+  .service-content h3 { font-size: 2.2rem; }
+  .service-content p:not(.eyebrow) { font-size: 1rem; line-height: 1.55; }
   .check-list { grid-template-columns:1fr; }
   .photo-stack { min-height:500px; }
   .photo-main { width:90%; height:455px; }
@@ -480,11 +483,5 @@ footer p:last-child { text-align:right; }
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     box-shadow: 0 1px 0 rgba(255,255,255,.08);
-  }
-}
-/* Mobile experience cards — more compact */
-@media (max-width: 600px) {
-  .experience-card {
-    min-height: 620px;
   }
 }
