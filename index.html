@@ -159,18 +159,77 @@
     </section>
 
     <section class="book section" id="book">
-      <div>
+      <div class="book-copy">
         <p class="eyebrow">START YOUR OCEAN DAY</p>
-        <h2>What do you want to do in Hawaii?</h2>
-        <p>Tell us your preferred date, group size and whether you are interested in a boat charter, freediving course or custom ocean experience.</p>
+        <h2>Request your Hawaii ocean experience.</h2>
+        <p>Tell us what you would like to do, your preferred date and your group size. We will reply with availability and next steps.</p>
+        <div class="book-contact">
+          <a class="text-link" href="tel:+16145585764">Call: (614) 558-5764</a>
+          <a class="text-link" href="sms:+16145585764">Text: (614) 558-5764</a>
+          <a class="text-link" href="mailto:hawaiioceantravel@gmail.com">hawaiioceantravel@gmail.com</a>
+        </div>
       </div>
-      <div class="book-actions">
-        <a class="button light" href="mailto:hawaiioceantravel@gmail.com?subject=Hawaii%20Ocean%20Travel%20Booking%20Inquiry">Email an Inquiry</a>
-        <a class="text-link" href="tel:+16145585764">Call: (614) 558-5764</a>
-        <a class="text-link" href="sms:+16145585764">Text: (614) 558-5764</a>
-        <a class="text-link" href="mailto:hawaiioceantravel@gmail.com">Email: hawaiioceantravel@gmail.com</a>
-        <small>For faster booking, include your preferred date, group size and activity.</small>
-      </div>
+
+      <form class="booking-form" id="booking-form">
+        <div class="form-grid">
+          <label class="form-field form-field-wide">
+            <span>Experience</span>
+            <select name="experience" required>
+              <option value="" selected disabled>Select an experience</option>
+              <option>Private Boat Charter</option>
+              <option>Snorkeling</option>
+              <option>Sunset Cruise</option>
+              <option>AIDA Freediving Course</option>
+              <option>Private Freediving Coaching</option>
+              <option>Custom Ocean Trip</option>
+            </select>
+          </label>
+
+          <label class="form-field">
+            <span>Preferred date</span>
+            <input type="date" name="date" id="booking-date" required />
+          </label>
+
+          <label class="form-field">
+            <span>Preferred time</span>
+            <select name="time" required>
+              <option value="" selected disabled>Select a time</option>
+              <option>Morning</option>
+              <option>Afternoon</option>
+              <option>Sunset</option>
+              <option>Flexible</option>
+            </select>
+          </label>
+
+          <label class="form-field">
+            <span>Number of guests</span>
+            <input type="number" name="guests" min="1" max="6" inputmode="numeric" placeholder="1–6" required />
+          </label>
+
+          <label class="form-field">
+            <span>Name</span>
+            <input type="text" name="name" autocomplete="name" placeholder="Your name" required />
+          </label>
+
+          <label class="form-field">
+            <span>Phone</span>
+            <input type="tel" name="phone" autocomplete="tel" placeholder="Your phone number" required />
+          </label>
+
+          <label class="form-field">
+            <span>Email</span>
+            <input type="email" name="email" autocomplete="email" placeholder="you@example.com" required />
+          </label>
+
+          <label class="form-field form-field-wide">
+            <span>Special requests <small>(optional)</small></span>
+            <textarea name="requests" rows="4" placeholder="Tell us anything that would help us plan your trip."></textarea>
+          </label>
+        </div>
+
+        <button class="button light booking-submit" type="submit">Send Booking Request</button>
+        <p class="form-note">Submitting opens your email app with your request pre-filled. No payment is collected on this form.</p>
+      </form>
     </section>
 
     <section class="notes section-tight">
