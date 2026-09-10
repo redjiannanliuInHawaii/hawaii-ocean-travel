@@ -1,68 +1,253 @@
-const header = document.querySelector('.site-header');
-const menuButton = document.querySelector('.menu-button');
-const nav = document.querySelector('.nav');
-const year = document.querySelector('#year');
+// Hawaii Ocean Travel
+// Main site interactions + direct booking form submission
 
-function updateHeader() {
-  header.classList.toggle('scrolled', window.scrollY > 24);
-}
+document.addEventListener("DOMContentLoaded", () => {
+  /* =========================================
+     MOBILE NAVIGATION
+  ========================================= */
 
-updateHeader();
-window.addEventListener('scroll', updateHeader, { passive: true });
+  const menuButton = document.querySelector(".menu-toggle");
+  const nav = document.querySelector(".nav-links");
 
-year.textContent = new Date().getFullYear();
+  if (menuButton && nav) {
+    menuButton.addEventListener("click", () => {
+      nav.classList.toggle("open");
+      menuButton.classList.toggle("open");
+    });
 
-menuButton.addEventListener('click', () => {
-  const open = nav.classList.toggle('open');
-  menuButton.setAttribute('aria-expanded', String(open));
-});
+    nav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        nav.classList.remove("open");
+        menuButton.classList.remove("open");
+      });
+    });
+  }
 
-nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
-  nav.classList.remove('open');
-  menuButton.setAttribute('aria-expanded', 'false');
-}));
 
-const bookingForm = document.querySelector('#booking-form');
-const bookingDate = document.querySelector('#booking-date');
+  /* =========================================
+     SMOOTH SCROLL
+  ========================================= */
 
-if (bookingDate) {
-  const today = new Date();
-  const localDate = new Date(today.getTime() - today.getTimezoneOffset() * 60000)
-    .toISOString()
-    .split('T')[0];
-  bookingDate.min = localDate;
-}
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const href = link.getAttribute("href");
 
-if (bookingForm) {
-  bookingForm.addEventListener('submit', (event) => {
+      if (!href || href === "#") {
+        return;
+      }
+
+      const target = document.querySelector(href);
+
+      if (target) {
+        event.preventDefault();
+
+        target.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    });
+  });
+
+
+  /* =========================================
+     BOOKING FORM
+  ========================================= */
+
+  const bookingForm = document.getElementById("booking-form");
+
+  if (!bookingForm) {
+    return;
+  }
+
+  const submitButton = bookingForm.querySelector(
+    'button[type="submit"], input[type="submit"]'
+  );
+
+  /*
+   * Prevent customers from selecting a date in the past.
+   */
+
+  const dateInput = bookingForm.querySelector(
+    'input[name="date"], #booking-date'
+  );
+
+  if (dateInput) {
+    const today = new Date();
+
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+
+    dateInput.min = `${year}-${month}-${day}`;
+  }
+
+
+  /* =========================================
+     FORM STATUS MESSAGE
+  ========================================= */
+
+  let statusMessage = document.getElementById("booking-status");
+
+  if (!statusMessage) {
+    statusMessage = document.createElement("div");
+    statusMessage.id = "booking-status";
+    statusMessage.setAttribute("role", "status");
+    statusMessage.setAttribute("aria-live", "polite");
+
+    statusMessage.style.marginTop = "14px";
+    statusMessage.style.fontSize = "14px";
+    statusMessage.style.lineHeight = "1.5";
+
+    if (submitButton) {
+      submitButton.insertAdjacentElement("afterend", statusMessage);
+    } else {
+      bookingForm.appendChild(statusMessage);
+    }
+  }
+
+
+  /* =========================================
+     DIRECT FORM SUBMISSION
+  ========================================= */
+
+  bookingForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    if (!bookingForm.reportValidity()) return;
+    if (!bookingForm.checkValidity()) {
+      bookingForm.reportValidity();
+      return;
+    }
 
-    const data = new FormData(bookingForm);
-    const value = (key) => String(data.get(key) || '').trim();
-    const requests = value('requests') || 'None';
+    const formData = new FormData(bookingForm);
 
-    const subject = `Booking Request — ${value('experience')} — ${value('date')}`;
-    const body = [
-      'Hi Hawaii Ocean Travel,',
-      '',
-      'I would like to request availability for:',
-      '',
-      `Experience: ${value('experience')}`,
-      `Preferred date: ${value('date')}`,
-      `Preferred time: ${value('time')}`,
-      `Number of guests: ${value('guests')}`,
-      '',
-      `Name: ${value('name')}`,
-      `Phone: ${value('phone')}`,
-      `Email: ${value('email')}`,
-      '',
-      `Special requests: ${requests}`,
-      '',
-      'Thank you.'
-    ].join('\n');
+    /*
+     * Add FormSubmit settings.
+     */
 
-    window.location.href = `mailto:hawaiioceantravel@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    formData.append(
+      "_subject",
+      "New Hawaii Ocean Travel Booking Request"
+    );
+
+    formData.append(
+      "_template",
+      "table"
+    );
+
+    formData.append(
+      "_captcha",
+      "false"
+    );
+
+
+    /*
+     * Use customer's email as reply-to when available.
+     */
+
+    const customerEmail = formData.get("email");
+
+    if (customerEmail) {
+      formData.append("_replyto", customerEmail);
+    }
+
+
+    /*
+     * Change button while sending.
+     */
+
+    const originalButtonText = submitButton
+      ? submitButton.textContent
+      : "";
+
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending...";
+    }
+
+    statusMessage.textContent = "";
+    statusMessage.style.color = "";
+
+
+    try {
+      const response = await fetch(
+        "https://formsubmit.co/ajax/hawaiioceantravel@gmail.com",
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+          },
+          body: formData,
+        }
+      );
+
+
+      let result = null;
+
+      try {
+        result = await response.json();
+      } catch (error) {
+        result = null;
+      }
+
+
+      if (!response.ok) {
+        throw new Error(
+          result?.message || "Unable to send booking request."
+        );
+      }
+
+
+      /*
+       * Success
+       */
+
+      statusMessage.textContent =
+        "Booking request sent! We’ll contact you shortly.";
+
+      statusMessage.style.color = "#1f7a4d";
+
+      bookingForm.reset();
+
+
+      /*
+       * Restore minimum date after reset.
+       */
+
+      if (dateInput) {
+        const today = new Date();
+
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, "0");
+        const day = String(today.getDate()).padStart(2, "0");
+
+        dateInput.min = `${year}-${month}-${day}`;
+      }
+
+
+      /*
+       * Scroll success message into view on smaller screens.
+       */
+
+      statusMessage.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
+
+    } catch (error) {
+      console.error("Booking submission error:", error);
+
+      statusMessage.textContent =
+        "We couldn't send your request. Please call or text (614) 558-5764, or email hawaiioceantravel@gmail.com.";
+
+      statusMessage.style.color = "#b42318";
+
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent =
+          originalButtonText || "Send Booking Request";
+      }
+    }
   });
-}
+});
