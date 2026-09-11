@@ -3,6 +3,28 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   /* =========================================
+     HEADER SCROLL STATE
+  ========================================= */
+
+  const siteHeader = document.querySelector(".site-header");
+
+  if (siteHeader) {
+    const updateHeader = () => {
+      if (window.scrollY > 80) {
+        siteHeader.classList.add("scrolled");
+      } else {
+        siteHeader.classList.remove("scrolled");
+      }
+    };
+
+    updateHeader();
+
+    window.addEventListener("scroll", updateHeader, {
+      passive: true,
+    });
+  }
+
+  /* =========================================
      MOBILE NAVIGATION
   ========================================= */
 
